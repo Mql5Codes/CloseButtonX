@@ -1,0 +1,80 @@
+//+------------------------------------------------------------------+
+//| CloseButtonX v. 2.50.mq5                                         |
+//| Telegram: @grupomql5 & @comunidademql5                           |
+//|                                                                  |
+//+------------------------------------------------------------------+
+#property copyright  "Telegram: @grupomql5 || @comunidademql5 || por Pedro em 06.04.2021"
+#property link       "http://t.me/grupomql5 "
+#property description "Este EA é totalmente de graça! Contato: closebuttonx@gmail.com\nUtilize os códigos para escolher quais informações deseja visualizar na barra:\n:num = nº na fila | :tipo = tipo | :open = valor de abertura\n:vol = volume | :porc = a diferença em % em relação ao valor de abertura | :ticket = ticket | :rr = Risco/Retorno em relação ao takeprofit ou stoploss \nNo parâmetro da margem de proteção do stop virtual, se deve preencher de acordo com o ativo. Ex. -0.00200 (em pips) ou -100 (em pontos)"
+#property version     "beta"
+#include "Includes/ClasseMasterCloseButtonX.mqh";
+#include <Filelog.mqh>
+
+CMasterCloseButtonX Control;
+//+------------------------------------------------------------------+
+//| FUNÇÃO DE INICIALIZAÇÃO DO EXPERT                                |
+//+------------------------------------------------------------------+
+int OnInit()
+  {
+  Control.Run();
+  return(INIT_SUCCEEDED);     
+  }
+
+//+------------------------------------------------------------------+
+//| FUNÇÃO DE REMOÇÃO DO EXPERT                                      |
+//+------------------------------------------------------------------+
+void OnDeinit(const int reason)
+  {
+   Control.Deinit();
+  }
+//+---------------------------------------------------------------------------------------------+
+//| MANIPULADOR EVENTOS ONTICK - MONITORA OS TICKS DO ATIVO FORNECIDO PELO SERVIDOR/CORRETORA   |
+//+---------------------------------------------------------------------------------------------+
+void OnTick()
+  {
+   Control.OnTick();
+  }
+//+----------------------------------------------------------------------+
+//| MANIPULADOR DE EVENTOS ONCHAREVENT - MONITORA EVENTOS NO GRÁFICO     |
+//+----------------------------------------------------------------------+
+void OnChartEvent(const int id,const long& lparam,const double& dparam,const string& sparam)
+  {
+   Control.OnChartEvent(id,lparam,dparam,sparam);
+  }
+//+---------------------------------------------------------------------------------------------------------+
+//| MANIPULADOR DE EVENTOS ONTRADETRANSACTION - MONITORA TRANSAÇÕES ENTRE O TERMINA E O SERVIDOR/CORRETORA  |
+//+---------------------------------------------------------------------------------------------------------+
+void OnTradeTransaction(const MqlTradeTransaction& trans,
+                        const MqlTradeRequest& request,
+                        const MqlTradeResult& result)
+  {
+   Control.OnTradeTransaction(trans,request,result);
+  }
+
+//+------------------------------------------------------------------------------------------------+
+//| FUNÇÃO CHAMADA QUANDO O EXPERT É DESATIVADO PARA REMOVER A INTERFACE GRÁFICA (BOTÕES E LINHAS) |
+//+------------------------------------------------------------------------------------------------+
+void Resetar()
+  {
+   for(int i=0; i<=ArraySize(virtual_lista)-1; i++)
+     {
+      Interface.Apagar((string) virtual_lista[i].order_name,0);
+      ObjectDelete(0,virtual_lista[i].order_name);
+     }
+   for(int i=0; i<=PositionsTotal()-1; i++)
+     {
+      ulong ticket = PositionGetTicket(i);
+      if(PositionGetSymbol(i) == ChartSymbol())
+        {
+         Interface.Apagar((string) ticket+"PCLcbxx",0);
+        }
+     }
+   for(int i=0; i<=OrdersTotal()-1; i++)
+     {
+      ulong ticket = OrderGetTicket(i);
+      if(OrderGetString(ORDER_SYMBOL) == ChartSymbol())
+        {
+         Interface.Apagar((string) ticket+"OCLcbxx",0);
+        }
+     }
+  }
