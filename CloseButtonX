@@ -8,7 +8,6 @@
 #property description "Este EA é totalmente de graça! Contato: closebuttonx@gmail.com\nUtilize os códigos para escolher quais informações deseja visualizar na barra:\n:num = nº na fila | :tipo = tipo | :open = valor de abertura\n:vol = volume | :porc = a diferença em % em relação ao valor de abertura | :ticket = ticket | :rr = Risco/Retorno em relação ao takeprofit ou stoploss \nNo parâmetro da margem de proteção do stop virtual, se deve preencher de acordo com o ativo. Ex. -0.00200 (em pips) ou -100 (em pontos)"
 #property version     "beta"
 #include "Includes/ClasseMasterCloseButtonX.mqh";
-#include <Filelog.mqh>
 
 CMasterCloseButtonX Control;
 //+------------------------------------------------------------------+
