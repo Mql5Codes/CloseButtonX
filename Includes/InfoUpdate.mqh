@@ -1,12 +1,11 @@
 //+------------------------------------------------------------------+
-//|                                              TextosNasBarras.mqh |
-//|                                                 Brazil Maio 2020 |
-//|                                                www.script.com.br |
+//| InfoUpdate.mqh                                                   |
+//| Telegram: @grupomql5 & @comunidademql5 // http://t.me/grupomql5  |
+//| Por Pedro                                                        |
 //+------------------------------------------------------------------+
-#property copyright "Brazil Maio 2020"
-#property description "Informações de texto que devem ser atualizada nas barras a cada tick - Em 17.03.2021"
-#property description "Versão 1.00 - Em 17.03.2021"
-#property link      "www.script.com.br"
+#property copyright  "Telegram: @grupomql5 || @comunidademql5 || por Pedro em 06.04.2021"
+#property description "Informações de texto que devem ser atualizada nas barras a cada tick - Em 26.11.2021"
+#property version     "1.1"
 #include <../Virtualization.mqh>;
 
 //+------------------------------------------------------------------+
